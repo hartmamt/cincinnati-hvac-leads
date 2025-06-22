@@ -151,7 +151,7 @@ export default function LeadFormSection() {
                     required
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     placeholder="Your Company Name"
                   />
                 </div>
@@ -167,7 +167,7 @@ export default function LeadFormSection() {
                     required
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     placeholder="Your Full Name"
                   />
                 </div>
@@ -183,7 +183,7 @@ export default function LeadFormSection() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     placeholder="(513) 555-0123"
                   />
                 </div>
@@ -198,7 +198,7 @@ export default function LeadFormSection() {
                     name="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -242,10 +242,10 @@ export default function LeadFormSection() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Size</option>
-                    <option value="under-5000">Under 5,000 sq ft</option>
-                    <option value="5000-15000">5,000 - 15,000 sq ft</option>
-                    <option value="15000-50000">15,000 - 50,000 sq ft</option>
-                    <option value="over-50000">Over 50,000 sq ft</option>
+                    <option value="under_5000">Under 5,000 sq ft</option>
+                    <option value="5000_15000">5,000 - 15,000 sq ft</option>
+                    <option value="15000_50000">15,000 - 50,000 sq ft</option>
+                    <option value="over_50000">Over 50,000 sq ft</option>
                   </select>
                 </div>
 
@@ -304,7 +304,7 @@ export default function LeadFormSection() {
                   rows={4}
                   value={formData.additionalDetails}
                   onChange={(e) => setFormData({ ...formData, additionalDetails: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                   placeholder="Describe your current HVAC situation, any specific issues, or questions you have..."
                 />
               </div>

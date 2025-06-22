@@ -39,7 +39,7 @@ export default function HeroSection() {
             {/* CTA Button */}
             <div className="pt-4">
               <button 
-                onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('get-quote')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-lg px-8 py-4 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
               >
                 Get Your Free Quote Now
@@ -53,24 +53,40 @@ export default function HeroSection() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Business Name</label>
-                <div className="bg-white/20 rounded p-3 text-white/60">
-                  Your Company Name
-                </div>
+                <input 
+                  type="text" 
+                  placeholder="Your Company Name"
+                  className="w-full bg-white/20 border border-white/30 rounded p-3 text-white placeholder-white/60 focus:bg-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  onFocus={() => document.getElementById('get-quote')?.scrollIntoView({ behavior: 'smooth' })}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Property Type</label>
-                <div className="bg-white/20 rounded p-3 text-white/60">
-                  Office, Retail, Warehouse...
-                </div>
+                <select 
+                  className="w-full bg-white/20 border border-white/30 rounded p-3 text-white focus:bg-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  onFocus={() => document.getElementById('get-quote')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <option value="">Select Property Type</option>
+                  <option value="office">Office Building</option>
+                  <option value="retail">Retail Store</option>
+                  <option value="warehouse">Warehouse</option>
+                  <option value="restaurant">Restaurant</option>
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Service Needed</label>
-                <div className="bg-white/20 rounded p-3 text-white/60">
-                  Maintenance, Repair, Installation...
-                </div>
+                <select 
+                  className="w-full bg-white/20 border border-white/30 rounded p-3 text-white focus:bg-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  onFocus={() => document.getElementById('get-quote')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <option value="">Select Service</option>
+                  <option value="maintenance">Preventive Maintenance</option>
+                  <option value="repair">Emergency Repair</option>
+                  <option value="installation">New Installation</option>
+                </select>
               </div>
               <button 
-                onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('get-quote')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 rounded-lg transition-colors duration-200"
               >
                 Continue to Full Form →
