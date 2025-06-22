@@ -11,7 +11,7 @@ export default function HeroSection() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Cincinnati's #1
+                Cincinnati&apos;s #1
                 <span className="block text-yellow-400">Commercial HVAC</span>
                 Maintenance Network
               </h1>

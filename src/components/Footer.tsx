@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock } from 'lucide-react'
+import { Phone, Mail, Clock } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -74,7 +74,7 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-8 pt-6">
           <div className="grid md:grid-cols-2 gap-4 items-center">
             <div className="text-sm text-gray-400">
-              © 2024 Cincinnati Commercial HVAC. All rights reserved.
+              2024 Cincinnati Commercial HVAC. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm text-gray-400 md:justify-end">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

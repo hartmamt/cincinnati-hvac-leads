@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Building, MapPin, Phone, Mail, MessageCircle, Calendar } from 'lucide-react'
+import { Building, Phone, Calendar } from 'lucide-react'
 
 export default function LeadFormSection() {
   const [formData, setFormData] = useState({
@@ -61,8 +61,8 @@ export default function LeadFormSection() {
             <div className="bg-blue-700 rounded-lg p-6">
               <h3 className="text-lg font-semibold mb-2">What happens next?</h3>
               <ul className="text-left space-y-2 text-blue-100">
-                <li>• We'll match you with up to 3 qualified contractors</li>
-                <li>• You'll receive calls within 2 hours</li>
+                <li>• We&apos;ll match you with up to 3 qualified contractors</li>
+                <li>• You&apos;ll receive calls within 2 hours</li>
                 <li>• Get free estimates and compare options</li>
                 <li>• Choose the best contractor for your needs</li>
               </ul>

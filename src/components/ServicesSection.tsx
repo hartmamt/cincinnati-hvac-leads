@@ -73,7 +73,7 @@ export default function ServicesSection() {
                 Why Choose Our HVAC Network?
               </h3>
               <p className="text-gray-600 mb-6">
-                We connect you with Cincinnati's most trusted commercial HVAC contractors. Every partner in our network is thoroughly vetted for quality, reliability, and customer satisfaction.
+                We connect you with Cincinnati&apos;s most trusted commercial HVAC contractors. Every partner in our network is thoroughly vetted for quality, reliability, and customer satisfaction.
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
                 {benefits.map((benefit, index) => (

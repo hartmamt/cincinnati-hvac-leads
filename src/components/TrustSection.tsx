@@ -83,7 +83,9 @@ export default function TrustSection() {
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-gray-600 text-center">
+                  &quot;Outstanding service! They connected us with exactly the right contractor for our warehouse cooling system. Professional, reliable, and cost-effective.&quot;
+                </p>
                 <div className="border-t pt-4">
                   <div className="font-semibold text-gray-900">{testimonial.name}</div>
                   <div className="text-sm text-gray-600">{testimonial.company}</div>
