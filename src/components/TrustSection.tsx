@@ -1,133 +1,137 @@
-import { Star, Award, Users, Clock, Shield } from 'lucide-react'
+import { Shield, Clock, CheckCircle, Users, Award, Phone } from 'lucide-react';
 
 export default function TrustSection() {
-  const stats = [
+  const guarantees = [
     {
-      icon: <Users className="w-8 h-8 text-blue-600" />,
-      number: "500+",
-      label: "Commercial Clients Served"
+      icon: Shield,
+      title: "Licensed & Insured Only",
+      description: "All our partner contractors are fully licensed, bonded, and carry comprehensive insurance for your protection."
     },
     {
-      icon: <Star className="w-8 h-8 text-blue-600" />,
-      number: "4.9",
-      label: "Average Rating"
+      icon: Clock,
+      title: "24-Hour Response",
+      description: "Get connected with qualified contractors within 24 hours, with emergency services available for urgent needs."
     },
     {
-      icon: <Clock className="w-8 h-8 text-blue-600" />,
-      number: "< 2hrs",
-      label: "Emergency Response Time"
+      icon: CheckCircle,
+      title: "No Obligation Quotes",
+      description: "Receive free, detailed estimates with no commitment. Compare options and choose what&apos;s best for your business."
     },
     {
-      icon: <Award className="w-8 h-8 text-blue-600" />,
-      number: "15+",
-      label: "Years Experience"
+      icon: Users,
+      title: "Pre-Screened Partners",
+      description: "Every contractor in our network has been vetted for quality, reliability, and customer service excellence."
+    },
+    {
+      icon: Award,
+      title: "Quality Guarantee",
+      description: "We only work with contractors who maintain high standards and positive track records in commercial HVAC."
+    },
+    {
+      icon: Phone,
+      title: "Local Cincinnati Focus",
+      description: "All contractors are based in Greater Cincinnati and understand local building codes and climate needs."
     }
-  ]
+  ];
 
-  const testimonials = [
+  const processSteps = [
     {
-      name: "Sarah Martinez",
-      company: "Downtown Office Complex",
-      text: "Exceptional service! They responded to our emergency call within an hour and had our system running by end of day. Couldn't ask for better service.",
-      rating: 5
+      step: "1",
+      title: "Submit Your Request",
+      description: "Fill out our quick form with your HVAC needs and business details."
     },
     {
-      name: "Mike Johnson", 
-      company: "Cincinnati Manufacturing",
-      text: "Their preventive maintenance program has saved us thousands. No more unexpected breakdowns during peak season. Highly recommended!",
-      rating: 5
+      step: "2",
+      title: "Get Matched",
+      description: "We connect you with up to 3 qualified contractors in your area."
     },
     {
-      name: "Lisa Chen",
-      company: "Retail Plaza Manager",
-      text: "Professional, reliable, and competitive pricing. They've been maintaining our 50,000 sq ft facility for 3 years without issues.",
-      rating: 5
+      step: "3",
+      title: "Compare & Choose",
+      description: "Review quotes and select the contractor that best fits your needs."
     }
-  ]
+  ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        {/* Trust Stats */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Trusted by Cincinnati Businesses
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Service Guarantees */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Our Service Guarantees
           </h2>
-          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Join hundreds of satisfied commercial property owners who trust our network for their HVAC needs.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            We&apos;re committed to connecting Cincinnati businesses with the highest quality HVAC contractors. 
+            Here&apos;s what you can expect when you work with us.
           </p>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-50 rounded-full mb-4">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600 text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-12">
-            What Our Clients Say
-          </h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {guarantees.map((guarantee, index) => {
+            const IconComponent = guarantee.icon;
+            return (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
                 <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
+                  <div className="flex-shrink-0">
+                    <IconComponent className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="ml-3 text-lg font-semibold text-gray-900">
+                    {guarantee.title}
+                  </h3>
                 </div>
-                <p className="text-gray-600 text-center">
-                  &quot;Outstanding service! They connected us with exactly the right contractor for our warehouse cooling system. Professional, reliable, and cost-effective.&quot;
+                <p className="text-gray-600">
+                  {guarantee.description}
                 </p>
-                <div className="border-t pt-4">
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-gray-600">{testimonial.company}</div>
-                </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Trust Badges */}
-        <div className="bg-blue-50 rounded-2xl p-8">
-          <h3 className="text-xl font-bold text-center text-gray-900 mb-8">
-            Our Contractors Are Certified & Insured
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="bg-white rounded-lg p-4 shadow-sm mb-2">
-                <Award className="w-8 h-8 text-blue-600 mx-auto" />
+        {/* How It Works Process */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            How It Works
+          </h2>
+          <p className="text-lg text-gray-600">
+            Getting connected with quality HVAC contractors is simple and fast.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {processSteps.map((step, index) => (
+            <div key={index} className="text-center">
+              <div className="mx-auto w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
+                {step.step}
               </div>
-              <span className="text-sm font-medium text-gray-700">Licensed & Bonded</span>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {step.title}
+              </h3>
+              <p className="text-gray-600">
+                {step.description}
+              </p>
             </div>
-            <div className="text-center">
-              <div className="bg-white rounded-lg p-4 shadow-sm mb-2">
-                <Shield className="w-8 h-8 text-green-600 mx-auto" />
-              </div>
-              <span className="text-sm font-medium text-gray-700">Fully Insured</span>
+          ))}
+        </div>
+
+        {/* Industry Stats */}
+        <div className="bg-blue-600 rounded-2xl p-8 text-white text-center">
+          <h3 className="text-2xl font-bold mb-6">Why Choose Professional HVAC Maintenance?</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">40%</div>
+              <p className="text-blue-100">Average savings on energy costs with regular maintenance</p>
             </div>
-            <div className="text-center">
-              <div className="bg-white rounded-lg p-4 shadow-sm mb-2">
-                <Users className="w-8 h-8 text-purple-600 mx-auto" />
-              </div>
-              <span className="text-sm font-medium text-gray-700">Background Checked</span>
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">85%</div>
+              <p className="text-blue-100">Reduction in emergency breakdowns with preventive care</p>
             </div>
-            <div className="text-center">
-              <div className="bg-white rounded-lg p-4 shadow-sm mb-2">
-                <Star className="w-8 h-8 text-yellow-600 mx-auto" />
-              </div>
-              <span className="text-sm font-medium text-gray-700">Quality Guaranteed</span>
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">15+</div>
+              <p className="text-blue-100">Years extended equipment lifespan with proper maintenance</p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
