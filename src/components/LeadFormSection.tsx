@@ -2,61 +2,89 @@
 
 import { useState } from 'react'
 import { Building, Phone, Calendar } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 export default function LeadFormSection() {
   const [formData, setFormData] = useState({
-    businessName: '',
+    companyName: '',
     contactName: '',
-    email: '',
     phone: '',
-    propertyType: '',
-    squareFootage: '',
-    serviceNeeded: '',
-    urgency: '',
-    currentIssue: '',
+    email: '',
+    buildingType: '',
+    buildingSize: '',
+    serviceType: '',
+    timeline: '',
     preferredContact: '',
-    address: ''
+    additionalDetails: ''
   })
-
+  
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
     
-    // TODO: Replace with actual Supabase submission
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      setIsSubmitted(true)
-    } catch (error) {
-      console.error('Form submission error:', error)
+      // Submit lead to Supabase
+      const { data, error: supabaseError } = await supabase
+        .from('leads')
+        .insert([
+          {
+            company_name: formData.companyName,
+            contact_name: formData.contactName,
+            phone: formData.phone,
+            email: formData.email || null,
+            building_type: formData.buildingType,
+            building_size: formData.buildingSize,
+            service_type: formData.serviceType,
+            timeline: formData.timeline,
+            preferred_contact: formData.preferredContact,
+            additional_details: formData.additionalDetails || null,
+            source: 'website',
+            user_agent: navigator.userAgent
+          }
+        ])
+        .select()
+
+      if (supabaseError) {
+        throw supabaseError
+      }
+
+      console.log('Lead saved:', data)
+      setSubmitted(true)
+      
+      // Reset form
+      setFormData({
+        companyName: '',
+        contactName: '',
+        phone: '',
+        email: '',
+        buildingType: '',
+        buildingSize: '',
+        serviceType: '',
+        timeline: '',
+        preferredContact: '',
+        additionalDetails: ''
+      })
+    } catch (err) {
+      console.error('Error submitting lead:', err)
+      setError(err instanceof Error ? err.message : 'Failed to submit lead. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  if (isSubmitted) {
+  if (submitted) {
     return (
-      <section id="lead-form" className="py-16 bg-blue-600">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center text-white">
-            <div className="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
+      <section id="get-quote" className="py-16 bg-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-bold mb-4">Thank You!</h2>
             <p className="text-xl text-blue-100 mb-6">
-              Your request has been received. A qualified HVAC contractor will contact you within 2 hours during business hours.
+              You&apos;ll receive calls within 2 hours
             </p>
             <div className="bg-blue-700 rounded-lg p-6">
               <h3 className="text-lg font-semibold mb-2">What happens next?</h3>
@@ -67,6 +95,12 @@ export default function LeadFormSection() {
                 <li>• Choose the best contractor for your needs</li>
               </ul>
             </div>
+            <button 
+              onClick={() => setSubmitted(false)}
+              className="mt-6 text-blue-200 hover:text-white underline"
+            >
+              Submit another request
+            </button>
           </div>
         </div>
       </section>
@@ -74,7 +108,7 @@ export default function LeadFormSection() {
   }
 
   return (
-    <section id="lead-form" className="py-16 bg-blue-600">
+    <section id="get-quote" className="py-16 bg-blue-600">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
@@ -107,16 +141,16 @@ export default function LeadFormSection() {
               {/* Business Information */}
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Business Name *
+                  <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-2">
+                    Company Name *
                   </label>
                   <input
                     type="text"
-                    id="businessName"
-                    name="businessName"
+                    id="companyName"
+                    name="companyName"
                     required
-                    value={formData.businessName}
-                    onChange={handleInputChange}
+                    value={formData.companyName}
+                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Your Company Name"
                   />
@@ -132,25 +166,9 @@ export default function LeadFormSection() {
                     name="contactName"
                     required
                     value={formData.contactName}
-                    onChange={handleInputChange}
+                    onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Your Full Name"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="your@email.com"
                   />
                 </div>
 
@@ -164,9 +182,24 @@ export default function LeadFormSection() {
                     name="phone"
                     required
                     value={formData.phone}
-                    onChange={handleInputChange}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="(513) 555-0123"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="your@email.com"
                   />
                 </div>
               </div>
@@ -174,15 +207,15 @@ export default function LeadFormSection() {
               {/* Property & Service Information */}
               <div className="space-y-6">
                 <div>
-                  <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="buildingType" className="block text-sm font-medium text-gray-700 mb-2">
                     Property Type *
                   </label>
                   <select
-                    id="propertyType"
-                    name="propertyType"
+                    id="buildingType"
+                    name="buildingType"
                     required
-                    value={formData.propertyType}
-                    onChange={handleInputChange}
+                    value={formData.buildingType}
+                    onChange={(e) => setFormData({ ...formData, buildingType: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Property Type</option>
@@ -198,14 +231,14 @@ export default function LeadFormSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="squareFootage" className="block text-sm font-medium text-gray-700 mb-2">
-                    Square Footage
+                  <label htmlFor="buildingSize" className="block text-sm font-medium text-gray-700 mb-2">
+                    Property Size
                   </label>
                   <select
-                    id="squareFootage"
-                    name="squareFootage"
-                    value={formData.squareFootage}
-                    onChange={handleInputChange}
+                    id="buildingSize"
+                    name="buildingSize"
+                    value={formData.buildingSize}
+                    onChange={(e) => setFormData({ ...formData, buildingSize: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Size</option>
@@ -217,15 +250,15 @@ export default function LeadFormSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="serviceNeeded" className="block text-sm font-medium text-gray-700 mb-2">
-                    Service Needed *
+                  <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-2">
+                    Service Type *
                   </label>
                   <select
-                    id="serviceNeeded"
-                    name="serviceNeeded"
+                    id="serviceType"
+                    name="serviceType"
                     required
-                    value={formData.serviceNeeded}
-                    onChange={handleInputChange}
+                    value={formData.serviceType}
+                    onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select Service</option>
@@ -239,21 +272,21 @@ export default function LeadFormSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="urgency" className="block text-sm font-medium text-gray-700 mb-2">
-                    Urgency
+                  <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-2">
+                    Timeline
                   </label>
                   <select
-                    id="urgency"
-                    name="urgency"
-                    value={formData.urgency}
-                    onChange={handleInputChange}
+                    id="timeline"
+                    name="timeline"
+                    value={formData.timeline}
+                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <option value="">Select Urgency</option>
-                    <option value="emergency">Emergency (ASAP)</option>
-                    <option value="urgent">Urgent (Within 24 hours)</option>
-                    <option value="soon">Soon (Within 1 week)</option>
-                    <option value="planning">Planning Ahead</option>
+                    <option value="">Select Timeline</option>
+                    <option value="asap">Emergency (ASAP)</option>
+                    <option value="within_week">Within 1 Week</option>
+                    <option value="within_month">Within 1 Month</option>
+                    <option value="planning_ahead">Planning Ahead</option>
                   </select>
                 </div>
               </div>
@@ -262,30 +295,15 @@ export default function LeadFormSection() {
             {/* Full Width Fields */}
             <div className="mt-6 space-y-6">
               <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                  Property Address
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Street Address, City, State, ZIP"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="currentIssue" className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Issue or Additional Details
+                <label htmlFor="additionalDetails" className="block text-sm font-medium text-gray-700 mb-2">
+                  Additional Details
                 </label>
                 <textarea
-                  id="currentIssue"
-                  name="currentIssue"
+                  id="additionalDetails"
+                  name="additionalDetails"
                   rows={4}
-                  value={formData.currentIssue}
-                  onChange={handleInputChange}
+                  value={formData.additionalDetails}
+                  onChange={(e) => setFormData({ ...formData, additionalDetails: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Describe your current HVAC situation, any specific issues, or questions you have..."
                 />
@@ -293,21 +311,33 @@ export default function LeadFormSection() {
 
               <div>
                 <label htmlFor="preferredContact" className="block text-sm font-medium text-gray-700 mb-2">
-                  Preferred Contact Method
+                  Preferred Contact Method *
                 </label>
                 <select
                   id="preferredContact"
                   name="preferredContact"
+                  required
                   value={formData.preferredContact}
-                  onChange={handleInputChange}
+                  onChange={(e) => setFormData({ ...formData, preferredContact: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Select Preference</option>
                   <option value="phone">Phone Call</option>
                   <option value="email">Email</option>
-                  <option value="both">Either Phone or Email</option>
+                  <option value="text">Text Message</option>
                 </select>
               </div>
+
+              {/* Error Display */}
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div className="flex">
+                    <div className="text-red-800">
+                      <strong>Error:</strong> {error}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Submit Button */}
